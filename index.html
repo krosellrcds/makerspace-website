@@ -152,6 +152,96 @@
     .hint { display: none; position: absolute; top: 0; left: 0; font-size: 0.75rem; font-weight: 500; color: var(--navy); }
     .decor.empty .hint { display: block; }
 
+    /* Equipment section: scrolls below the hero */
+    @media (prefers-reduced-motion: no-preference) { html { scroll-behavior: smooth; } }
+    .more {
+      font-weight: 600; color: var(--navy);
+      text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 5px;
+    }
+    .more:hover { color: var(--ink); }
+    .equip {
+      background: var(--navy); color: var(--paper);
+      padding: clamp(3rem, 8vw, 6rem) clamp(1rem, 4vw, 3rem);
+      scroll-margin-top: 1rem;
+    }
+    .equip :focus-visible { outline-color: var(--yellow); }
+    .equip-head { position: relative; isolation: isolate; margin-bottom: clamp(1.5rem, 4vw, 3rem); }
+    .equip h2 {
+      display: block; margin: 0; padding: 0; border: 0;
+      font-size: clamp(2.6rem, 8vw, 7rem); line-height: 0.95; letter-spacing: -0.04em; font-weight: 800;
+      text-transform: uppercase;
+    }
+    .equip-note { margin: 1rem 0 0; color: rgba(251, 251, 255, 0.88); font-size: 1.05rem; }
+    .hint-touch { display: none; }
+    @media (hover: none) { .hint-hover { display: none; } .hint-touch { display: inline; } }
+    .d4 { left: 36%; top: -15%; width: 28%; }
+    .decor.d4.empty { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 150'%3E%3Cpath d='M30 110 C0 60 60 15 105 45 C150 75 105 125 75 95 C45 65 115 25 155 55 C190 82 160 130 115 122' fill='none' stroke='%2301baef' stroke-width='3' stroke-linecap='round'/%3E%3C/svg%3E"); }
+    .d4 .hint { color: var(--paper); }
+
+    /* Tiles: tall panels in a row. The one you point at grows wider and shows its specs. */
+    .tiles { display: flex; gap: 0.75rem; min-height: clamp(26rem, 62vh, 36rem); }
+    .tile {
+      position: relative; flex: 1 1 0; min-width: 0; overflow: hidden;
+      display: flex; flex-direction: column; justify-content: space-between;
+      padding: 1.1rem; color: var(--ink); cursor: default;
+      background-size: cover; background-position: center;
+    }
+    .tile > * { position: relative; }
+    .tile.tone0 { background-color: var(--yellow); }
+    .tile.tone1 { background-color: var(--sky); }
+    .tile.tone2 { background-color: var(--paper); }
+    .tile.photo { color: var(--paper); }
+    .tile.photo::before {
+      content: ""; position: absolute; inset: 0;
+      background: linear-gradient(rgba(4, 15, 22, 0.5), rgba(4, 15, 22, 0.15) 40%, rgba(4, 15, 22, 0.78));
+    }
+    .tile h3 { margin: 0; font-size: clamp(1.1rem, 1.7vw, 1.6rem); line-height: 1.1; letter-spacing: -0.03em; font-weight: 800; }
+    .bottom { display: grid; }
+    .cue, .detail { grid-area: 1 / 1; align-self: end; }
+    .cue { font-weight: 600; font-size: 0.95rem; }
+    .detail { width: max(15rem, calc(36vw - 4.5rem)); opacity: 0; }
+    .detail dl { margin: 0; }
+    .detail dt { margin-top: 0.8rem; font-size: 0.85rem; font-weight: 700; }
+    .detail dt:first-child { margin-top: 0; }
+    .detail dd { margin: 0.1rem 0 0; font-size: 1.05rem; line-height: 1.35; }
+
+    @media (prefers-reduced-motion: no-preference) {
+      .tile { transition: flex-grow 0.55s cubic-bezier(0.4, 0, 0.1, 1); }
+      .detail, .cue { transition: opacity 0.35s ease; }
+      .detail { transition-delay: 0.12s; }
+    }
+    .tile.open, .tile:focus-visible { flex-grow: 3.4; }
+    .tile.open .detail, .tile:focus-visible .detail { opacity: 1; }
+    .tile.open .cue, .tile:focus-visible .cue { opacity: 0; }
+    @media (hover: hover) {
+      .tile:hover { flex-grow: 3.4; }
+      .tile:hover .detail { opacity: 1; }
+      .tile:hover .cue { opacity: 0; }
+    }
+
+    /* Additional inventory: its own rectangle with simple bullets */
+    .extra {
+      margin-top: 0.75rem; background: var(--paper); color: var(--ink);
+      border-top: 6px solid var(--yellow); padding: clamp(1.25rem, 3vw, 2rem);
+    }
+    .extra h3 { margin: 0; font-size: clamp(1.4rem, 2.6vw, 2rem); line-height: 1.1; letter-spacing: -0.03em; font-weight: 800; }
+    .extra ul { margin: 0.9rem 0 0; padding-left: 1.25rem; font-size: 1.1rem; line-height: 1.5; max-width: 52rem; }
+    .extra li { margin-bottom: 0.35rem; }
+    .extra li::marker { color: var(--navy); }
+
+    /* Phones: tiles stack, and tapping one opens its specs downward */
+    @media (max-width: 800px) {
+      .tiles { flex-direction: column; min-height: 0; }
+      .d4 { left: auto; right: 0; top: -5%; width: 38%; }
+      .tile { flex: none; min-height: 4.5rem; padding: 1rem; }
+      .tile h3::after { content: "+"; float: right; font-weight: 600; }
+      .tile.open h3::after { content: "\2013"; }
+      .cue { display: none; }
+      .detail { width: auto; opacity: 1; max-height: 0; overflow: hidden; }
+      .tile.open .detail { max-height: 24rem; margin-top: 0.9rem; }
+      .tile.open, .tile:focus-visible { flex-grow: 0; }
+    }
+
     /* Footer line */
     .foot { padding: 0 clamp(1rem, 4vw, 3rem) 2.5rem; font-size: 0.95rem; color: var(--navy); }
     .foot p { margin: 0; }
@@ -222,10 +312,31 @@
         <div class="decor d3" aria-hidden="true"><img src="images/decor-3.png" alt=""><span class="hint">Add PNG: images/decor-3.png</span></div>
         <!-- EDIT ME: second paragraph (filler text) -->
         <p>Use this second paragraph for classes, equipment, or how families and colleagues can get involved. You can edit, shorten, or delete it.</p>
+        <a class="more" href="#equipment">See equipment and specs</a>
       </div>
     </div>
 
   </main>
+
+  <section class="equip" id="equipment" aria-labelledby="equip-title">
+    <div class="equip-head">
+      <!-- Background PNG #4: sits behind the heading. Upload it as images/decor-4.png -->
+      <div class="decor d4" aria-hidden="true"><img src="images/decor-4.png" alt=""><span class="hint">Add PNG: images/decor-4.png</span></div>
+      <!-- EDIT ME: section heading -->
+      <h2 id="equip-title">Equipment</h2>
+      <!-- EDIT ME: short line under the heading -->
+      <p class="equip-note"><span class="hint-hover">Hover over a tile to see what we have.</span><span class="hint-touch">Tap a tile to see what we have.</span></p>
+    </div>
+
+    <div class="tiles" id="tiles"></div>
+
+    <!-- Additional inventory: its own rectangle. The bullets are in the ADDITIONAL INVENTORY list in the script. -->
+    <aside class="extra" aria-labelledby="extra-title">
+      <!-- EDIT ME: title of the rectangle -->
+      <h3 id="extra-title">Additional inventory</h3>
+      <ul id="extra-list"></ul>
+    </aside>
+  </section>
 
   <footer class="foot">
     <!-- EDIT ME: small line at the bottom -->
@@ -245,6 +356,73 @@
       ["create", "original", "hands-on", "thoughtful", "vibrant", "ambitious"]
     ];
     /* ===================== END OF EDITABLE AREA ===================== */
+
+    /* ==========================================================
+       EDIT ME: EQUIPMENT TILES
+       Each block in curly braces { } is one tile, in the order they appear left to right.
+       - name:  the title on the tile
+       - image: optional photo for the tile, like "images/laser.jpg". Leave as "" for a solid color.
+       - specs: the details shown when someone points at the tile. Each row is ["Label", "Value"].
+       To add a tile, copy a whole block (including the comma after it). To remove one, delete its block.
+       ========================================================== */
+    const EQUIPMENT = [
+      {
+        name: "Laser cutters",
+        image: "",
+        specs: [
+          ["Large laser", "Epilog Fusion M2, CO2, 60 watt"],
+          ["Small laser", "Epilog Mini, 40 watt"]
+        ]
+      },
+      {
+        name: "3D printers",
+        image: "",
+        specs: [
+          ["Printers", "4 Bambu Lab X1 Carbon"],
+          ["Also", "1 Bambu Lab A1 mini"],
+          ["Filament system", "AMS with filament reading"],
+          ["Filament types", "PLA, PETG, and TPU"]
+        ]
+      },
+      {
+        name: "Sewing",
+        image: "",
+        specs: [
+          ["Sewing machines", "4 Brother CS7000X"],
+          ["Serger", "1 Brother serger"]
+        ]
+      },
+      {
+        name: "Embroidery",
+        image: "",
+        specs: [
+          ["Embroidery machines", "3 Janome Memory Craft 400E"]
+        ]
+      },
+      {
+        name: "Vinyl cutter",
+        image: "",
+        specs: [
+          ["Vinyl cutter", "Roland CAM 4 GS21"]
+        ]
+      },
+      {
+        name: "Soldering",
+        image: "",
+        specs: [
+          ["Soldering irons", "4, fitted with flux"],
+          ["Solder", "Rosin core wire"]
+        ]
+      }
+    ];
+
+    /* EDIT ME: ADDITIONAL INVENTORY
+       One line per bullet point in the extra rectangle under the tiles. */
+    const EXTRA = [
+      "Electronic components, from servos and alligator clips to mini motors and Arduinos",
+      "General-purpose craft supplies like cardboard, Styrofoam, fabric, and felt"
+    ];
+    /* ===================== END OF EDITABLE EQUIPMENT AREA ===================== */
 
     const slot = document.getElementById("slot");
     const reelEls = slot.querySelectorAll(".reel");
@@ -345,6 +523,75 @@
       setTimeout(function () { spinAll().then(loop); }, 900);
     }
     slot.addEventListener("click", function () { spinAll().then(loop); });
+
+    /* Equipment tiles */
+    (function () {
+      const wrap = document.getElementById("tiles");
+      const tiles = [];
+
+      EQUIPMENT.forEach(function (item, i) {
+        const tile = document.createElement("article");
+        tile.className = "tile tone" + (i % 3);
+        tile.tabIndex = 0;
+
+        const title = document.createElement("h3");
+        title.textContent = item.name;
+
+        const bottom = document.createElement("div");
+        bottom.className = "bottom";
+        const cue = document.createElement("span");
+        cue.className = "cue";
+        cue.textContent = "See specs";
+        const detail = document.createElement("div");
+        detail.className = "detail";
+        const dl = document.createElement("dl");
+        (item.specs || []).forEach(function (row) {
+          const dt = document.createElement("dt");
+          dt.textContent = row[0];
+          const dd = document.createElement("dd");
+          dd.textContent = row[1];
+          dl.append(dt, dd);
+        });
+        detail.append(dl);
+        bottom.append(cue, detail);
+        tile.append(title, bottom);
+
+        if (item.image) {
+          const probe = new Image();
+          probe.onload = function () {
+            tile.style.backgroundImage = "url('" + item.image + "')";
+            tile.classList.add("photo");
+          };
+          probe.src = item.image;
+        }
+
+        wrap.append(tile);
+        tiles.push(tile);
+      });
+
+      /* On touch screens and narrow windows, tapping a tile opens it (and closes the others) */
+      function tapMode() {
+        return window.matchMedia("(hover: none)").matches || window.matchMedia("(max-width: 800px)").matches;
+      }
+      function toggle(tile) {
+        const wasOpen = tile.classList.contains("open");
+        tiles.forEach(function (t) { t.classList.remove("open"); });
+        if (!wasOpen) tile.classList.add("open");
+      }
+      tiles.forEach(function (tile) {
+        tile.addEventListener("click", function () { if (tapMode()) toggle(tile); });
+        tile.addEventListener("keydown", function (e) {
+          if ((e.key === "Enter" || e.key === " ") && tapMode()) { e.preventDefault(); toggle(tile); }
+        });
+      });
+
+      const extra = document.getElementById("extra-list");
+      EXTRA.forEach(function (text) {
+        const li = document.createElement("li");
+        li.textContent = text;
+        extra.append(li);
+      });
+    })();
 
     /* Background PNGs: if a file is missing, show the stand-in scribble instead */
     document.querySelectorAll(".decor").forEach(function (box) {
