@@ -4,89 +4,310 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <!-- EDIT ME: the text that shows in the browser tab -->
-  <title>Your Makerspace Name</title>
+  <title>RCDS Makerspace</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600&display=swap" rel="stylesheet">
   <style>
     :root {
-      --ink: #12343b;
-      --paper: #f4f7f8;
-      --tape: #ffc83d;
-      --muted: #4d6469;
-    }
-    @media (prefers-color-scheme: dark) {
-      :root { --ink: #e8f1f2; --paper: #0e1f23; --muted: #9db4b8; }
+      --black: #111;
+      --blue: #3554d9;
+      --paper: #f5f6f1;
+      --orange: #df6e56;
+      --yellow: #f1fb8f;
     }
     * { box-sizing: border-box; }
     body {
       margin: 0;
-      font-family: "Trebuchet MS", "Segoe UI", system-ui, sans-serif;
+      font-family: "Inter Tight", "Helvetica Neue", Arial, sans-serif;
       background: var(--paper);
-      color: var(--ink);
-      line-height: 1.6;
+      color: var(--black);
+      line-height: 1.55;
     }
-    main { max-width: 720px; margin: 0 auto; padding: 0 1.25rem 4rem; }
-    header { padding: 4rem 0 2.5rem; border-bottom: 6px solid var(--tape); }
-    h1 { font-size: clamp(2.2rem, 7vw, 3.6rem); line-height: 1.1; margin: 0 0 1rem; }
-    h2 { font-size: 1.5rem; margin: 3rem 0 0.75rem; }
-    p { max-width: 62ch; color: var(--muted); }
-    header p { font-size: 1.15rem; color: var(--ink); }
-    ul { padding: 0; list-style: none; }
-    li { padding: 0.5rem 0 0.5rem 1rem; border-left: 4px solid var(--tape); margin-bottom: 0.6rem; }
-    a { color: var(--ink); text-decoration-thickness: 2px; text-underline-offset: 3px; }
-    a:focus-visible { outline: 3px solid var(--tape); outline-offset: 3px; }
+    a { color: inherit; }
+    :focus-visible { outline: 3px solid var(--blue); outline-offset: 3px; }
+
+    /* Top bar */
+    .top {
+      display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline;
+      gap: 0.75rem 2rem;
+      padding: 1.5rem clamp(1rem, 4vw, 3rem);
+    }
+    .brand { font-weight: 600; letter-spacing: 0.06em; text-decoration: none; text-transform: uppercase; }
+    .top nav { display: flex; flex-wrap: wrap; gap: 0.5rem 2rem; }
+    .top nav a { text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 5px; font-weight: 500; }
+    .top nav a:hover { color: var(--blue); }
+
+    /* Hero: two columns, like the sketch */
+    .hero {
+      position: relative;
+      display: grid; grid-template-columns: 5fr 6fr;
+      gap: 2rem clamp(1.5rem, 4vw, 4rem);
+      padding: 1rem clamp(1rem, 4vw, 3rem) clamp(2rem, 5vw, 4rem);
+      min-height: calc(100vh - 6rem);
+      min-height: calc(100svh - 6rem);
+      overflow: clip;
+    }
+    .hero-left {
+      display: flex; flex-direction: column; justify-content: flex-end;
+      gap: clamp(1.25rem, 3vw, 2.5rem);
+    }
+    .hero-right { align-self: start; padding-top: clamp(3rem, 12vh, 8rem); max-width: 40rem; }
+
+    /* Big WELCOME word */
+    .welcome-wrap { position: relative; isolation: isolate; order: 2; }
+    h1 {
+      margin: 0;
+      font-size: clamp(2.8rem, 7.6vw, 9rem);
+      line-height: 0.9; letter-spacing: -0.04em; font-weight: 600; text-transform: uppercase;
+    }
+
+    /* Slot machine */
+    .slot {
+      order: 1;
+      display: block; width: min(100%, 26rem); padding: 0;
+      font: inherit; color: #000; text-align: left; cursor: pointer;
+      background: var(--yellow); border: 2px solid #000;
+    }
+    .reel {
+      box-sizing: content-box;
+      display: block; height: 1.35em; overflow: hidden;
+      padding: 0 0.7rem;
+      font-size: clamp(1.9rem, 4.2vw, 3.2rem);
+      font-weight: 600; letter-spacing: -0.03em; line-height: 1.35;
+    }
+    .reel + .reel { border-top: 2px solid #000; }
+    .strip { display: block; will-change: transform; }
+    .word { display: block; height: 1.35em; line-height: 1.35em; white-space: nowrap; }
+    .reel.spinning .strip { filter: blur(1.5px); }
+
+    /* Right column text */
+    h2 {
+      display: inline-block; margin: 0 0 1.75rem; padding-bottom: 0.3rem;
+      font-size: clamp(1.8rem, 3.6vw, 3rem);
+      line-height: 1.1; letter-spacing: -0.03em; font-weight: 600;
+      border-bottom: 5px double var(--black);
+    }
+    .lede-wrap { position: relative; isolation: isolate; }
+    .hero-right p { margin: 0 0 1.5rem; font-size: clamp(1.02rem, 1.5vw, 1.2rem); max-width: 38rem; }
+    .p2 { position: relative; isolation: isolate; }
     .cta {
-      display: inline-block; padding: 0.7rem 1.3rem;
-      background: var(--tape); color: #12343b;
-      font-weight: 600; text-decoration: none;
+      display: inline-block; margin-top: 0.5rem; padding: 0.7rem 1.3rem;
+      background: var(--black); color: #fff; font-weight: 500; text-decoration: none;
     }
     .cta:hover { text-decoration: underline; text-underline-offset: 4px; }
-    footer { margin-top: 3rem; font-size: 0.9rem; color: var(--muted); }
+
+    /* Background PNG images. Each sits behind the text it is attached to. */
+    .decor { position: absolute; z-index: -1; pointer-events: none; }
+    .decor img { display: block; width: 100%; height: auto; }
+    .d1 { left: -26%; top: -75%; width: 46%; }
+    .d2 { right: 4%; top: -45%; width: 44%; }
+    .d3 { left: -32%; top: -10%; width: 58%; }
+
+    /* Stand-in scribbles, shown only until you add the real PNG files */
+    .decor.empty { aspect-ratio: 4 / 3; background-repeat: no-repeat; background-position: center; background-size: contain; }
+    .decor.d1.empty { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 150'%3E%3Cpath d='M20 100 C0 50 70 10 110 40 C150 70 100 120 70 90 C40 60 110 20 150 50 C185 78 150 128 105 118' fill='none' stroke='%233554d9' stroke-width='3' stroke-linecap='round'/%3E%3C/svg%3E"); }
+    .decor.d2.empty { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 150'%3E%3Cpath d='M15 75 C15 20 95 5 120 45 C145 85 85 125 55 95 C25 65 95 30 135 60 C170 88 140 135 90 125 C60 118 40 100 50 80' fill='none' stroke='%23df6e56' stroke-width='3' stroke-linecap='round'/%3E%3C/svg%3E"); }
+    .decor.d3.empty { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 150'%3E%3Cpath d='M40 40 C80 0 160 20 160 70 C160 120 90 135 60 105 C30 75 80 45 115 70 C150 95 120 130 85 115' fill='none' stroke='%23999' stroke-width='3' stroke-linecap='round'/%3E%3C/svg%3E"); }
+    .hint { display: none; position: absolute; top: 0; left: 0; font-size: 0.75rem; font-weight: 500; color: var(--blue); }
+    .decor.empty .hint { display: block; }
+
+    /* Footer line */
+    .foot { padding: 0 clamp(1rem, 4vw, 3rem) 2.5rem; font-size: 0.95rem; color: #444; }
+    .foot p { margin: 0; }
+
+    /* Phones and small tablets: one column */
+    @media (max-width: 800px) {
+      .hero { grid-template-columns: 1fr; min-height: 0; }
+      .hero-left { justify-content: flex-start; }
+      .welcome-wrap { order: 1; }
+      .slot { order: 2; }
+      h1 { font-size: 17vw; }
+      .hero-right { padding-top: 1rem; }
+      .d1 { left: -10%; top: -40%; width: 60%; }
+      .d2 { right: -8%; top: -30%; width: 60%; }
+      .d3 { left: -10%; top: 0; width: 70%; }
+    }
   </style>
 </head>
 <body>
-<main>
 
-  <!-- EDIT ME: top of the page -->
-  <header>
-    <h1>Your Makerspace Name</h1>
-    <p>One or two sentences about what students make here and who it is for.</p>
+  <header class="top">
+    <!-- EDIT ME: the name in the top left -->
+    <a class="brand" href="index.html">RCDS Makerspace</a>
+    <!-- EDIT ME: menu links. Replace each # with the page address once that page exists, like about.html -->
+    <nav aria-label="Main">
+      <a href="#">About Us</a>
+      <a href="#">Book the Space</a>
+      <a href="#">STEAM Classes</a>
+      <a href="#">Contact Us</a>
+    </nav>
   </header>
 
-  <!-- EDIT ME: what you do -->
-  <section>
-    <h2>What we do</h2>
-    <p>Describe your programs here. For example: rapid prototyping challenges, beginner circuits, design projects, and open build time.</p>
-  </section>
+  <main class="hero">
 
-  <!-- EDIT ME: link to the student work page. Keep href="projects.html" so it opens your gallery. -->
-  <section>
-    <h2>Student work</h2>
-    <p>See the kinds of projects and classes our makerspace supports.</p>
-    <p><a class="cta" href="projects.html">Explore student work</a></p>
-  </section>
+    <div class="hero-left">
+      <div class="welcome-wrap">
+        <!-- Background PNG #2: sits behind the word WELCOME. Upload it as images/decor-2.png -->
+        <div class="decor d2" aria-hidden="true"><img src="images/decor-2.png" alt=""><span class="hint">Add PNG: images/decor-2.png</span></div>
+        <!-- EDIT ME: big headline word -->
+        <h1>Welcome</h1>
+      </div>
 
-  <!-- EDIT ME: equipment list. Copy a whole <li> line to add more, delete a line to remove one. -->
-  <section>
-    <h2>What we have</h2>
-    <ul>
-      <li>3D printers</li>
-      <li>Laser cutters</li>
-      <li>Sewing machines</li>
-      <li>Electronics and circuit kits</li>
-      <li>Craft supplies</li>
-    </ul>
-  </section>
+      <!-- The slot machine. The words live in the SLOT WORDS list near the bottom of this file. -->
+      <button class="slot" id="slot" type="button" aria-label="Word slot machine. Activate to spin new words.">
+        <span class="reel" aria-hidden="true"><span class="strip"><span class="word">design</span></span></span>
+        <span class="reel" aria-hidden="true"><span class="strip"><span class="word">code</span></span></span>
+        <span class="reel" aria-hidden="true"><span class="strip"><span class="word">create</span></span></span>
+      </button>
+    </div>
 
-  <!-- EDIT ME: contact info. Use a general makerspace email, not a personal one. -->
-  <section>
-    <h2>Get in touch</h2>
-    <p>Questions or ideas? Email us at <a href="mailto:makerspace@example.com">makerspace@example.com</a>.</p>
-  </section>
+    <div class="hero-right">
+      <div class="lede-wrap">
+        <!-- Background PNG #1: sits behind the heading. Upload it as images/decor-1.png -->
+        <div class="decor d1" aria-hidden="true"><img src="images/decor-1.png" alt=""><span class="hint">Add PNG: images/decor-1.png</span></div>
+        <!-- EDIT ME: heading -->
+        <h2>Welcome to the Makerspace</h2>
+      </div>
 
-  <footer>
-    <!-- EDIT ME: footer -->
-    <p>Your School Name</p>
+      <!-- EDIT ME: first paragraph (filler text) -->
+      <p>Add a short welcome here. Tell visitors what the makerspace is, who it serves, and what students can make here. Two or three sentences is plenty.</p>
+
+      <div class="p2">
+        <!-- Background PNG #3: sits behind the second paragraph. Upload it as images/decor-3.png -->
+        <div class="decor d3" aria-hidden="true"><img src="images/decor-3.png" alt=""><span class="hint">Add PNG: images/decor-3.png</span></div>
+        <!-- EDIT ME: second paragraph (filler text) -->
+        <p>Use this second paragraph for classes, equipment, or how families and colleagues can get involved. You can edit, shorten, or delete it.</p>
+        <a class="cta" href="projects.html">Explore student work</a>
+      </div>
+    </div>
+
+  </main>
+
+  <footer class="foot">
+    <!-- EDIT ME: small line at the bottom -->
+    <p>Rye Country Day School. Add an address, hours, or contact email here.</p>
   </footer>
 
-</main>
+  <script>
+    /* ==========================================================
+       EDIT ME: SLOT WORDS
+       Each line is one spinning slot. Change, add, or remove words
+       inside the quotes. Keep each word under about 11 letters so it
+       fits. The FIRST word in each line is what shows when the page loads.
+       ========================================================== */
+    const REELS = [
+      ["design", "bold", "curious", "inventive", "playful", "fearless"],
+      ["code", "clever", "bright", "daring", "resourceful", "precise"],
+      ["create", "original", "hands-on", "thoughtful", "vibrant", "ambitious"]
+    ];
+    /* ===================== END OF EDITABLE AREA ===================== */
+
+    const slot = document.getElementById("slot");
+    const reelEls = slot.querySelectorAll(".reel");
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const current = REELS.map(function () { return 0; });
+    const WORD_HEIGHT = 1.35; /* in em, matches the CSS */
+    let timer = null;
+    let spinning = false;
+
+    function makeWord(text) {
+      const s = document.createElement("span");
+      s.className = "word";
+      s.textContent = text;
+      return s;
+    }
+
+    function showWord(strip, text) {
+      strip.style.transition = "none";
+      strip.style.transform = "translateY(0)";
+      strip.replaceChildren(makeWord(text));
+    }
+
+    function pickNext(i) {
+      let next;
+      do { next = Math.floor(Math.random() * REELS[i].length); } while (next === current[i] && REELS[i].length > 1);
+      return next;
+    }
+
+    function spinReel(i, duration) {
+      const strip = reelEls[i].querySelector(".strip");
+      const words = REELS[i];
+      const next = pickNext(i);
+      const seq = [words[current[i]]];
+      const filler = 8 + i * 4;
+      for (let k = 0; k < filler; k++) seq.push(words[Math.floor(Math.random() * words.length)]);
+      seq.push(words[next]);
+
+      strip.replaceChildren.apply(strip, seq.map(makeWord));
+      strip.style.transition = "none";
+      strip.style.transform = "translateY(0)";
+      void strip.offsetHeight;
+
+      reelEls[i].classList.add("spinning");
+      strip.style.transition = "transform " + duration + "ms cubic-bezier(0.16, 0.84, 0.3, 1)";
+      strip.style.transform = "translateY(-" + ((seq.length - 1) * WORD_HEIGHT) + "em)";
+      current[i] = next;
+
+      return new Promise(function (resolve) {
+        let finished = false;
+        function done() {
+          if (finished) return;
+          finished = true;
+          strip.removeEventListener("transitionend", done);
+          reelEls[i].classList.remove("spinning");
+          showWord(strip, words[next]);
+          resolve();
+        }
+        strip.addEventListener("transitionend", done);
+        setTimeout(done, duration + 250);
+      });
+    }
+
+    function spinAll() {
+      if (spinning) return Promise.resolve();
+      spinning = true;
+
+      if (reduceMotion.matches) {
+        REELS.forEach(function (words, i) {
+          const next = pickNext(i);
+          current[i] = next;
+          showWord(reelEls[i].querySelector(".strip"), words[next]);
+        });
+        spinning = false;
+        return Promise.resolve();
+      }
+
+      return Promise.all([spinReel(0, 1400), spinReel(1, 1900), spinReel(2, 2400)]).then(function () {
+        spinning = false;
+      });
+    }
+
+    function loop() {
+      clearTimeout(timer);
+      if (reduceMotion.matches) return;
+      timer = setTimeout(function () {
+        if (document.hidden) { loop(); return; }
+        spinAll().then(loop);
+      }, 4500);
+    }
+
+    REELS.forEach(function (words, i) {
+      showWord(reelEls[i].querySelector(".strip"), words[0]);
+    });
+
+    if (!reduceMotion.matches) {
+      setTimeout(function () { spinAll().then(loop); }, 900);
+    }
+    slot.addEventListener("click", function () { spinAll().then(loop); });
+
+    /* Background PNGs: if a file is missing, show the stand-in scribble instead */
+    document.querySelectorAll(".decor").forEach(function (box) {
+      const img = box.querySelector("img");
+      function missing() { box.classList.add("empty"); img.remove(); }
+      img.addEventListener("error", missing);
+      if (img.complete && img.naturalWidth === 0) missing();
+    });
+  </script>
 </body>
 </html>
