@@ -20,9 +20,9 @@
       --sky: #01baef;
       --paper: #fbfbff;
       --ink: #040f16;
-      /* Frosted glass settings: raise the blur for a softer look, raise the tint for a lighter, whiter look */
-      --frost-blur: 11px;
-      --frost-tint: rgba(251, 251, 255, 0.58);
+      /* Frosted glass settings: raise the blur for a softer look, raise the tint (last number) for a whiter look */
+      --frost-blur: 6px;
+      --frost-tint: rgba(251, 251, 255, 0.5);
     }
     * { box-sizing: border-box; }
     html { background: var(--paper); }
@@ -36,20 +36,6 @@
     }
     a { color: inherit; }
     :focus-visible { outline: 3px solid var(--navy); outline-offset: 3px; }
-
-    /* Frosted glass background: the makerspace photo, softly blurred, under a pale tint */
-    body::before {
-      content: ""; position: fixed; z-index: -2;
-      inset: calc(var(--frost-blur) * -3);
-      background: url("images/makerspace.jpg") center / cover no-repeat;
-      filter: blur(var(--frost-blur)) saturate(1.1);
-    }
-    body::after {
-      content: ""; position: fixed; inset: 0; z-index: -1;
-      background:
-        linear-gradient(to bottom, rgba(255, 255, 255, 0.35), rgba(255, 255, 255, 0) 40%),
-        var(--frost-tint);
-    }
 
     /* Top bar: logo left, quiet links, an outlined button, then the main filled button */
     .top {
@@ -85,6 +71,28 @@
       min-height: calc(100vh - 6rem);
       min-height: calc(100svh - 6rem);
       overflow: clip;
+    }
+    /* Frosted glass pane: the makerspace photo across the middle of the page, behind the content */
+    .hero { isolation: isolate; }
+    .pane {
+      position: absolute; z-index: -1;
+      top: 0.5rem; bottom: 0.5rem;
+      left: clamp(0.5rem, 2vw, 1.5rem); right: clamp(0.5rem, 2vw, 1.5rem);
+      overflow: hidden;
+      border-radius: clamp(16px, 2.5vw, 32px);
+      border: 1px solid rgba(255, 255, 255, 0.85);
+      box-shadow: 0 24px 60px rgba(4, 46, 83, 0.14);
+    }
+    .pane-photo {
+      position: absolute; inset: calc(var(--frost-blur) * -3);
+      background: url("images/makerspace.jpg") center / cover no-repeat;
+      filter: blur(var(--frost-blur)) saturate(1.1);
+    }
+    .pane::after {
+      content: ""; position: absolute; inset: 0;
+      background:
+        linear-gradient(135deg, rgba(255, 255, 255, 0.45), rgba(255, 255, 255, 0) 55%),
+        var(--frost-tint);
     }
     .hero-left {
       display: flex; flex-direction: column; justify-content: flex-end;
@@ -178,6 +186,9 @@
   </header>
 
   <main class="hero">
+
+    <!-- Frosted glass pane: the makerspace photo in the middle of the page. The photo is images/makerspace.jpg -->
+    <div class="pane" aria-hidden="true"><div class="pane-photo"></div></div>
 
     <div class="hero-left">
       <div class="welcome-wrap">
