@@ -184,9 +184,17 @@
       position: relative; flex: 1 1 0; min-width: 0; overflow: hidden;
       display: flex; flex-direction: column; justify-content: space-between;
       padding: 1.1rem; color: var(--ink); cursor: default;
-      background-size: cover; background-position: center;
+      isolation: isolate;
     }
     .tile > * { position: relative; }
+    /* The photo is a fixed-size layer centered in the tile. The tile opens like a window over it,
+       so the picture never rescales while the tile grows or shrinks (that rescaling caused the flicker). */
+    .tile > .tile-photo {
+      position: absolute; z-index: -1; top: 0; left: 50%;
+      width: max(100%, 42vw); height: 100%; object-fit: cover;
+      transform: translate3d(-50%, 0, 0); will-change: transform;
+      pointer-events: none;
+    }
     .tile.tone0 { background-color: var(--yellow); }
     .tile.tone1 { background-color: var(--sky); }
     .tile.tone2 { background-color: var(--paper); }
@@ -232,6 +240,7 @@
     /* Phones: tiles stack, and tapping one opens its specs downward */
     @media (max-width: 800px) {
       .tiles { flex-direction: column; min-height: 0; }
+      .tile > .tile-photo { left: 0; width: 100%; transform: none; }
       .d4 { left: auto; right: 0; top: -5%; width: 38%; }
       .tile { flex: none; min-height: 4.5rem; padding: 1rem; }
       .tile h3::after { content: "+"; float: right; font-weight: 600; }
@@ -557,12 +566,15 @@
         tile.append(title, bottom);
 
         if (item.image) {
-          const probe = new Image();
-          probe.onload = function () {
-            tile.style.backgroundImage = "url('" + item.image + "')";
+          const photo = new Image();
+          photo.className = "tile-photo";
+          photo.alt = "";
+          photo.decoding = "async";
+          photo.onload = function () {
+            tile.prepend(photo);
             tile.classList.add("photo");
           };
-          probe.src = item.image;
+          photo.src = item.image;
         }
 
         wrap.append(tile);
