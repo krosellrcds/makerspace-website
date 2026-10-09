@@ -5,36 +5,57 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <!-- EDIT ME: the text that shows in the browser tab -->
   <title>Student Work | Your Makerspace Name</title>
+  <!-- Tab icon (the paw print). Upload favicon.ico, favicon.png, and apple-touch-icon.png next to this file. -->
+  <link rel="icon" href="favicon.ico" sizes="32x32">
+  <link rel="icon" href="favicon.png" type="image/png">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600&family=Instrument+Serif:ital@1&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
     :root {
-      --black: #000;
-      --blue: #3554d9;
-      --paper: #f5f6f1;
-      --orange: #df6e56;
-      --yellow: #f1fb8f;
+      /* Brand colors */
+      --yellow: #ffde3a;
+      --navy: #042e53;
+      --sky: #01baef;
+      --paper: #fbfbff;
+      --ink: #040f16;
     }
     * { box-sizing: border-box; }
     body {
       margin: 0;
       font-family: "Inter Tight", "Helvetica Neue", Arial, sans-serif;
       background: var(--paper);
-      color: #111;
+      color: var(--ink);
       line-height: 1.5;
     }
     a { color: inherit; }
-    :focus-visible { outline: 3px solid var(--blue); outline-offset: 3px; }
+    :focus-visible { outline: 3px solid var(--navy); outline-offset: 3px; }
 
-    /* Top bar */
-    .nav {
-      display: flex; justify-content: space-between; gap: 1rem;
+    /* Top bar: logo left, quiet links, an outlined button, then the main filled button */
+    .top {
+      display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center;
+      gap: 1rem 2rem;
       padding: 1.25rem clamp(1rem, 4vw, 3rem);
-      font-weight: 500;
     }
-    .nav a { text-decoration: none; }
-    .nav a:hover { text-decoration: underline; text-underline-offset: 4px; }
+    .brand {
+      display: inline-flex; align-items: center; gap: 0.6rem;
+      font-size: 1.3rem; font-weight: 800; letter-spacing: -0.02em;
+      color: var(--ink); text-decoration: none;
+    }
+    .brand img { display: block; width: 2rem; height: 2rem; }
+    .brand-b { background: var(--yellow); padding: 0 0.3em; margin-left: -0.15em; }
+    .top nav { display: flex; flex-wrap: wrap; align-items: center; gap: 0.75rem 1.5rem; }
+    .link { color: var(--ink); text-decoration: none; }
+    .link:hover { text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 5px; }
+    .btn {
+      display: inline-block; padding: 0.7rem 1.25rem; line-height: 1.2;
+      font-weight: 600; text-decoration: none; border: 2px solid var(--ink);
+    }
+    .btn-outline { color: var(--ink); background: rgba(251, 251, 255, 0.6); }
+    .btn-outline:hover, .btn-outline[aria-current="page"] { background: var(--yellow); }
+    .btn-fill { color: var(--paper); background: var(--navy); border-color: var(--navy); }
+    .btn-fill:hover { background: var(--ink); border-color: var(--ink); }
 
     /* Hero */
     .hero { padding: clamp(3rem, 10vw, 8rem) clamp(1rem, 4vw, 3rem) clamp(2.5rem, 6vw, 5rem); }
@@ -43,45 +64,38 @@
       font-size: clamp(3rem, 12.5vw, 9.5rem);
       line-height: 0.95;
       letter-spacing: -0.045em;
-      font-weight: 600;
-    }
-    h1 em {
-      font-family: "Instrument Serif", Georgia, serif;
-      font-style: italic;
-      font-weight: 400;
-      letter-spacing: 0;
-      color: var(--orange);
-      font-size: 1.05em;
+      font-weight: 800;
     }
     .hero p { max-width: 46ch; margin: 2rem 0 0; font-size: clamp(1.05rem, 2vw, 1.3rem); }
 
     /* Statement band */
     .band { display: grid; grid-template-columns: 1fr; }
-    .band-art { background: var(--blue); display: grid; place-items: center; padding: 2.5rem; min-height: 300px; }
+    .band-art { background: var(--navy); display: grid; place-items: center; padding: 2.5rem; min-height: 300px; }
     .band-art svg { width: min(300px, 100%); height: auto; }
-    .band-text { background: #fff; display: grid; place-items: center; padding: clamp(2.5rem, 7vw, 5rem); text-align: center; }
+    .band-text { background: var(--yellow); display: grid; place-items: center; padding: clamp(2.5rem, 7vw, 5rem); text-align: center; }
     .band-text p {
       margin: 0; max-width: 17em;
       font-size: clamp(1.2rem, 2.4vw, 1.9rem);
-      line-height: 1.3; font-weight: 600; text-transform: uppercase;
+      line-height: 1.3; font-weight: 700; text-transform: uppercase;
     }
     @media (min-width: 700px) { .band { grid-template-columns: 1fr 1fr; } }
 
     /* Gallery */
-    .gallery { background: var(--black); color: #fff; padding: clamp(3rem, 8vw, 6rem) clamp(1rem, 4vw, 3rem); }
+    .gallery { background: var(--ink); color: var(--paper); padding: clamp(3rem, 8vw, 6rem) clamp(1rem, 4vw, 3rem); }
     .gallery :focus-visible { outline-color: var(--yellow); }
     h2 {
       margin: 0 0 1.5rem;
       font-size: clamp(2.6rem, 9vw, 7rem);
-      line-height: 1; letter-spacing: -0.04em; font-weight: 500;
+      line-height: 1; letter-spacing: -0.04em; font-weight: 800;
     }
     .filters { display: flex; flex-wrap: wrap; gap: 0.5rem; margin: 0 0 2.5rem; }
     .filters button {
-      font: inherit; color: #fff; background: transparent;
-      border: 1.5px solid #fff; border-radius: 999px;
+      font: inherit; color: var(--paper); background: transparent;
+      border: 2px solid var(--paper); border-radius: 999px;
       padding: 0.4rem 1rem; cursor: pointer;
     }
-    .filters button[aria-pressed="true"] { background: var(--yellow); color: #000; border-color: var(--yellow); }
+    .filters button:hover { border-color: var(--sky); }
+    .filters button[aria-pressed="true"] { background: var(--yellow); color: var(--ink); border-color: var(--yellow); }
 
     .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; }
     @media (min-width: 700px) {
@@ -93,7 +107,7 @@
     /* Project tiles: a showcase, not a link */
     .tile {
       position: relative; margin: 0; min-width: 0;
-      overflow: hidden; background: #222;
+      overflow: hidden; background: #0d2433;
       aspect-ratio: 1; cursor: default;
     }
     .tile img {
@@ -102,16 +116,16 @@
     .tile figcaption {
       position: absolute; inset: 0; padding: 1rem;
       display: flex; flex-direction: column; align-items: center; justify-content: center;
-      text-align: center; color: #fff;
-      background: rgba(0, 0, 0, 0.3);
+      text-align: center; color: var(--paper);
+      background: rgba(4, 15, 22, 0.35);
       opacity: 0;
     }
     .tile .name {
       font-size: clamp(1.2rem, 2.2vw, 1.7rem);
-      font-weight: 600; letter-spacing: -0.02em; line-height: 1.15;
-      text-shadow: 0 1px 12px rgba(0, 0, 0, 0.5);
+      font-weight: 700; letter-spacing: -0.02em; line-height: 1.15;
+      text-shadow: 0 1px 12px rgba(4, 15, 22, 0.55);
     }
-    .tile .course { margin-top: 0.4rem; font-size: 0.95rem; text-shadow: 0 1px 10px rgba(0, 0, 0, 0.5); }
+    .tile .course { margin-top: 0.4rem; font-size: 0.95rem; text-shadow: 0 1px 10px rgba(4, 15, 22, 0.55); }
 
     /* Gentle fade and blur when hovering or when a keyboard user tabs to a tile */
     @media (prefers-reduced-motion: no-preference) {
@@ -132,7 +146,7 @@
         opacity: 1; inset: auto 0 0 0;
         align-items: flex-start; justify-content: flex-end; text-align: left;
         padding: 2.5rem 0.9rem 0.8rem;
-        background: linear-gradient(to top, rgba(0, 0, 0, 0.78), rgba(0, 0, 0, 0));
+        background: linear-gradient(to top, rgba(4, 15, 22, 0.8), rgba(4, 15, 22, 0));
       }
       .tile .name { font-size: 1.05rem; }
       .tile .course { font-size: 0.85rem; margin-top: 0.15rem; }
@@ -142,14 +156,14 @@
     /* Shown only when the photo file is not found yet */
     .hint {
       display: none; position: absolute; inset: 0; padding: 1rem;
-      align-items: flex-end; text-align: left; font-size: 0.9rem; font-weight: 500; color: #000;
+      align-items: flex-end; text-align: left; font-size: 0.9rem; font-weight: 500; color: var(--ink);
     }
     .tile.empty .hint { display: flex; }
-    .tone0 { background: var(--blue); }
-    .tone0 .hint { color: #fff; }
-    .tone1 { background: var(--orange); }
+    .tone0 { background: var(--navy); }
+    .tone0 .hint { color: var(--paper); }
+    .tone1 { background: var(--sky); }
     .tone2 { background: var(--yellow); }
-    .tone3 { background: #e4e5de; }
+    .tone3 { background: #dfe4ee; }
 
     footer { padding: 2.5rem clamp(1rem, 4vw, 3rem) 3rem; display: flex; flex-wrap: wrap; gap: 1rem 2rem; justify-content: space-between; }
     footer p { margin: 0; }
@@ -157,15 +171,22 @@
 </head>
 <body>
 
-  <nav class="nav">
-    <!-- EDIT ME: makerspace name. Keep href="index.html" so this links back to your home page. -->
-    <a href="index.html">Your Makerspace Name</a>
-    <a href="index.html">Home</a>
-  </nav>
+  <header class="top">
+    <!-- EDIT ME: the name in the top left. The paw print is favicon.png -->
+    <a class="brand" href="index.html"><img src="favicon.png" alt="">RCDS <span class="brand-b">Makerspace</span></a>
+    <!-- EDIT ME: menu links. Replace each # with the page address once that page exists, like about.html -->
+    <nav aria-label="Main">
+      <a class="link" href="#">About Us</a>
+      <a class="link" href="#">STEAM Classes</a>
+      <a class="link" href="#">Contact Us</a>
+      <a class="btn btn-outline" href="projects.html" aria-current="page">Student Work</a>
+      <a class="btn btn-fill" href="#">Book the Space</a>
+    </nav>
+  </header>
 
   <header class="hero">
-    <!-- EDIT ME: page headline. Keep the <em> tags around the one italic word. -->
-    <h1>Made <em>by</em> students</h1>
+    <!-- EDIT ME: page headline -->
+    <h1>Made by students</h1>
     <!-- EDIT ME: one or two sentences introducing this page -->
     <p>A look at what our students designed, built, and tested this year in the makerspace.</p>
   </header>
@@ -173,10 +194,10 @@
   <section class="band" aria-label="About this work">
     <div class="band-art" aria-hidden="true">
       <svg viewBox="0 0 300 300">
-        <circle cx="105" cy="105" r="70" fill="#df6e56"/>
-        <rect x="140" y="130" width="120" height="120" fill="#f1fb8f"/>
-        <polygon points="40,260 120,150 200,260" fill="#f5f6f1"/>
-        <rect x="40" y="40" width="40" height="14" fill="#000"/>
+        <path d="M30 140 V70 A40 40 0 0 1 70 30 H140 V140 Z" fill="#ffde3a"/>
+        <path d="M160 30 H195 A55 55 0 0 1 195 140 H160 Z" fill="#01baef"/>
+        <circle cx="85" cy="200" r="55" fill="#fbfbff"/>
+        <polygon points="160,270 215,165 270,270" fill="none" stroke="#ffde3a" stroke-width="12" stroke-linejoin="miter"/>
       </svg>
     </div>
     <div class="band-text">

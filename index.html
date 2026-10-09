@@ -5,38 +5,76 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <!-- EDIT ME: the text that shows in the browser tab -->
   <title>RCDS Makerspace</title>
+  <!-- Tab icon (the paw print). Upload favicon.ico, favicon.png, and apple-touch-icon.png next to this file. -->
+  <link rel="icon" href="favicon.ico" sizes="32x32">
+  <link rel="icon" href="favicon.png" type="image/png">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
     :root {
-      --black: #111;
-      --blue: #3554d9;
-      --paper: #f5f6f1;
-      --orange: #df6e56;
-      --yellow: #f1fb8f;
+      /* Brand colors */
+      --yellow: #ffde3a;
+      --navy: #042e53;
+      --sky: #01baef;
+      --paper: #fbfbff;
+      --ink: #040f16;
+      /* Frosted glass settings: raise the blur for a softer look, raise the tint for a lighter, whiter look */
+      --frost-blur: 11px;
+      --frost-tint: rgba(251, 251, 255, 0.58);
     }
     * { box-sizing: border-box; }
+    html { background: var(--paper); }
     body {
+      position: relative; isolation: isolate;
       margin: 0;
       font-family: "Inter Tight", "Helvetica Neue", Arial, sans-serif;
-      background: var(--paper);
-      color: var(--black);
+      background: transparent;
+      color: var(--ink);
       line-height: 1.55;
     }
     a { color: inherit; }
-    :focus-visible { outline: 3px solid var(--blue); outline-offset: 3px; }
+    :focus-visible { outline: 3px solid var(--navy); outline-offset: 3px; }
 
-    /* Top bar */
-    .top {
-      display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline;
-      gap: 0.75rem 2rem;
-      padding: 1.5rem clamp(1rem, 4vw, 3rem);
+    /* Frosted glass background: the makerspace photo, softly blurred, under a pale tint */
+    body::before {
+      content: ""; position: fixed; z-index: -2;
+      inset: calc(var(--frost-blur) * -3);
+      background: url("images/makerspace.jpg") center / cover no-repeat;
+      filter: blur(var(--frost-blur)) saturate(1.1);
     }
-    .brand { font-weight: 600; letter-spacing: 0.06em; text-decoration: none; text-transform: uppercase; }
-    .top nav { display: flex; flex-wrap: wrap; gap: 0.5rem 2rem; }
-    .top nav a { text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 5px; font-weight: 500; }
-    .top nav a:hover { color: var(--blue); }
+    body::after {
+      content: ""; position: fixed; inset: 0; z-index: -1;
+      background:
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.35), rgba(255, 255, 255, 0) 40%),
+        var(--frost-tint);
+    }
+
+    /* Top bar: logo left, quiet links, an outlined button, then the main filled button */
+    .top {
+      display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center;
+      gap: 1rem 2rem;
+      padding: 1.25rem clamp(1rem, 4vw, 3rem);
+    }
+    .brand {
+      display: inline-flex; align-items: center; gap: 0.6rem;
+      font-size: 1.3rem; font-weight: 800; letter-spacing: -0.02em;
+      color: var(--ink); text-decoration: none;
+    }
+    .brand img { display: block; width: 2rem; height: 2rem; }
+    .brand-b { background: var(--yellow); padding: 0 0.3em; margin-left: -0.15em; }
+    .top nav { display: flex; flex-wrap: wrap; align-items: center; gap: 0.75rem 1.5rem; }
+    .link { color: var(--ink); text-decoration: none; }
+    .link:hover { text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 5px; }
+    .btn {
+      display: inline-block; padding: 0.7rem 1.25rem; line-height: 1.2;
+      font-weight: 600; text-decoration: none; border: 2px solid var(--ink);
+    }
+    .btn-outline { color: var(--ink); background: rgba(251, 251, 255, 0.6); }
+    .btn-outline:hover, .btn-outline[aria-current="page"] { background: var(--yellow); }
+    .btn-fill { color: var(--paper); background: var(--navy); border-color: var(--navy); }
+    .btn-fill:hover { background: var(--ink); border-color: var(--ink); }
 
     /* Hero: two columns, like the sketch */
     .hero {
@@ -59,43 +97,37 @@
     h1 {
       margin: 0;
       font-size: clamp(2.8rem, 7.6vw, 9rem);
-      line-height: 0.9; letter-spacing: -0.04em; font-weight: 600; text-transform: uppercase;
+      line-height: 0.9; letter-spacing: -0.04em; font-weight: 800; text-transform: uppercase;
     }
 
     /* Slot machine */
     .slot {
       order: 1;
       display: block; width: min(100%, 26rem); padding: 0;
-      font: inherit; color: #000; text-align: left; cursor: pointer;
-      background: var(--yellow); border: 2px solid #000;
+      font: inherit; color: var(--ink); text-align: left; cursor: pointer;
+      background: var(--yellow); border: 2px solid var(--ink);
     }
     .reel {
       box-sizing: content-box;
       display: block; height: 1.35em; overflow: hidden;
       padding: 0 0.7rem;
       font-size: clamp(1.9rem, 4.2vw, 3.2rem);
-      font-weight: 600; letter-spacing: -0.03em; line-height: 1.35;
+      font-weight: 700; letter-spacing: -0.03em; line-height: 1.35;
     }
-    .reel + .reel { border-top: 2px solid #000; }
-    .strip { display: block; will-change: transform; }
+    .reel + .reel { border-top: 2px solid var(--ink); }
+    .strip { display: block; will-change: transform; backface-visibility: hidden; transform: translate3d(0, 0, 0); }
     .word { display: block; height: 1.35em; line-height: 1.35em; white-space: nowrap; }
-    .reel.spinning .strip { filter: blur(1.5px); }
 
     /* Right column text */
     h2 {
       display: inline-block; margin: 0 0 1.75rem; padding-bottom: 0.3rem;
       font-size: clamp(1.8rem, 3.6vw, 3rem);
-      line-height: 1.1; letter-spacing: -0.03em; font-weight: 600;
-      border-bottom: 5px double var(--black);
+      line-height: 1.1; letter-spacing: -0.03em; font-weight: 800;
+      border-bottom: 5px double var(--navy);
     }
     .lede-wrap { position: relative; isolation: isolate; }
     .hero-right p { margin: 0 0 1.5rem; font-size: clamp(1.02rem, 1.5vw, 1.2rem); max-width: 38rem; }
     .p2 { position: relative; isolation: isolate; }
-    .cta {
-      display: inline-block; margin-top: 0.5rem; padding: 0.7rem 1.3rem;
-      background: var(--black); color: #fff; font-weight: 500; text-decoration: none;
-    }
-    .cta:hover { text-decoration: underline; text-underline-offset: 4px; }
 
     /* Background PNG images. Each sits behind the text it is attached to. */
     .decor { position: absolute; z-index: -1; pointer-events: none; }
@@ -106,14 +138,14 @@
 
     /* Stand-in scribbles, shown only until you add the real PNG files */
     .decor.empty { aspect-ratio: 4 / 3; background-repeat: no-repeat; background-position: center; background-size: contain; }
-    .decor.d1.empty { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 150'%3E%3Cpath d='M20 100 C0 50 70 10 110 40 C150 70 100 120 70 90 C40 60 110 20 150 50 C185 78 150 128 105 118' fill='none' stroke='%233554d9' stroke-width='3' stroke-linecap='round'/%3E%3C/svg%3E"); }
-    .decor.d2.empty { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 150'%3E%3Cpath d='M15 75 C15 20 95 5 120 45 C145 85 85 125 55 95 C25 65 95 30 135 60 C170 88 140 135 90 125 C60 118 40 100 50 80' fill='none' stroke='%23df6e56' stroke-width='3' stroke-linecap='round'/%3E%3C/svg%3E"); }
-    .decor.d3.empty { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 150'%3E%3Cpath d='M40 40 C80 0 160 20 160 70 C160 120 90 135 60 105 C30 75 80 45 115 70 C150 95 120 130 85 115' fill='none' stroke='%23999' stroke-width='3' stroke-linecap='round'/%3E%3C/svg%3E"); }
-    .hint { display: none; position: absolute; top: 0; left: 0; font-size: 0.75rem; font-weight: 500; color: var(--blue); }
+    .decor.d1.empty { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 150'%3E%3Cpath d='M20 100 C0 50 70 10 110 40 C150 70 100 120 70 90 C40 60 110 20 150 50 C185 78 150 128 105 118' fill='none' stroke='%2301baef' stroke-width='3' stroke-linecap='round'/%3E%3C/svg%3E"); }
+    .decor.d2.empty { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 150'%3E%3Cpath d='M15 75 C15 20 95 5 120 45 C145 85 85 125 55 95 C25 65 95 30 135 60 C170 88 140 135 90 125 C60 118 40 100 50 80' fill='none' stroke='%23042e53' stroke-width='3' stroke-linecap='round'/%3E%3C/svg%3E"); }
+    .decor.d3.empty { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 150'%3E%3Cpath d='M40 40 C80 0 160 20 160 70 C160 120 90 135 60 105 C30 75 80 45 115 70 C150 95 120 130 85 115' fill='none' stroke='%23ffde3a' stroke-width='5' stroke-linecap='round'/%3E%3C/svg%3E"); }
+    .hint { display: none; position: absolute; top: 0; left: 0; font-size: 0.75rem; font-weight: 500; color: var(--navy); }
     .decor.empty .hint { display: block; }
 
     /* Footer line */
-    .foot { padding: 0 clamp(1rem, 4vw, 3rem) 2.5rem; font-size: 0.95rem; color: #444; }
+    .foot { padding: 0 clamp(1rem, 4vw, 3rem) 2.5rem; font-size: 0.95rem; color: var(--navy); }
     .foot p { margin: 0; }
 
     /* Phones and small tablets: one column */
@@ -133,14 +165,15 @@
 <body>
 
   <header class="top">
-    <!-- EDIT ME: the name in the top left -->
-    <a class="brand" href="index.html">RCDS Makerspace</a>
+    <!-- EDIT ME: the name in the top left. The paw print is favicon.png -->
+    <a class="brand" href="index.html"><img src="favicon.png" alt="">RCDS <span class="brand-b">Makerspace</span></a>
     <!-- EDIT ME: menu links. Replace each # with the page address once that page exists, like about.html -->
     <nav aria-label="Main">
-      <a href="#">About Us</a>
-      <a href="#">Book the Space</a>
-      <a href="#">STEAM Classes</a>
-      <a href="#">Contact Us</a>
+      <a class="link" href="#">About Us</a>
+      <a class="link" href="#">STEAM Classes</a>
+      <a class="link" href="#">Contact Us</a>
+      <a class="btn btn-outline" href="projects.html">Student Work</a>
+      <a class="btn btn-fill" href="#">Book the Space</a>
     </nav>
   </header>
 
@@ -167,19 +200,17 @@
         <!-- Background PNG #1: sits behind the heading. Upload it as images/decor-1.png -->
         <div class="decor d1" aria-hidden="true"><img src="images/decor-1.png" alt=""><span class="hint">Add PNG: images/decor-1.png</span></div>
         <!-- EDIT ME: heading -->
-        <h2>About The Makerspace</h2>
+        <h2>Welcome to the Makerspace</h2>
       </div>
 
       <!-- EDIT ME: first paragraph (filler text) -->
-      <p>Located on the Rye Country Day School campus, the Makerspace is a collaborative hub where Middle and Upper School students design and build projects across disciplines.</p>
+      <p>Add a short welcome here. Tell visitors what the makerspace is, who it serves, and what students can make here. Two or three sentences is plenty.</p>
 
       <div class="p2">
         <!-- Background PNG #3: sits behind the second paragraph. Upload it as images/decor-3.png -->
         <div class="decor d3" aria-hidden="true"><img src="images/decor-3.png" alt=""><span class="hint">Add PNG: images/decor-3.png</span></div>
         <!-- EDIT ME: second paragraph (filler text) -->
-        <p>From high-precision laser cutting and 3D printing to textiles and physical prototyping, the space is fully equipped with advanced fabrication technology alongside 
-          essential electronics and crafting tools. Whether coding microcontrollers or working with traditional materials, students turn innovative ideas into physical projects.</p>
-        <a class="cta" href="projects.html">Explore Student Work</a>
+        <p>Use this second paragraph for classes, equipment, or how families and colleagues can get involved. You can edit, shorten, or delete it.</p>
       </div>
     </div>
 
@@ -187,7 +218,7 @@
 
   <footer class="foot">
     <!-- EDIT ME: small line at the bottom -->
-    <p>Rye Country Day School   3 Cedar Street Rye, NY 10580   Cohen Center for the Creative Arts</p>
+    <p>Rye Country Day School. Add an address, hours, or contact email here.</p>
   </footer>
 
   <script>
@@ -208,6 +239,7 @@
     const reelEls = slot.querySelectorAll(".reel");
     const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
     const current = REELS.map(function () { return 0; });
+    const anims = REELS.map(function () { return null; });
     const WORD_HEIGHT = 1.35; /* in em, matches the CSS */
     let timer = null;
     let spinning = false;
@@ -219,9 +251,10 @@
       return s;
     }
 
-    function showWord(strip, text) {
-      strip.style.transition = "none";
-      strip.style.transform = "translateY(0)";
+    /* Show one word with no animation */
+    function setWord(i, text) {
+      const strip = reelEls[i].querySelector(".strip");
+      if (anims[i]) { anims[i].cancel(); anims[i] = null; }
       strip.replaceChildren(makeWord(text));
     }
 
@@ -231,38 +264,38 @@
       return next;
     }
 
-    function spinReel(i, duration) {
+    /* Build a long strip of words that starts on the word showing now and ends on the new word,
+       then slide it up in one smooth, GPU-driven motion. */
+    function spinReel(i, duration, delay) {
       const strip = reelEls[i].querySelector(".strip");
       const words = REELS[i];
       const next = pickNext(i);
+
       const seq = [words[current[i]]];
-      const filler = 8 + i * 4;
-      for (let k = 0; k < filler; k++) seq.push(words[Math.floor(Math.random() * words.length)]);
+      const filler = 10 + i * 4;
+      for (let k = 0; k < filler; k++) {
+        let w;
+        do { w = words[Math.floor(Math.random() * words.length)]; } while (w === seq[seq.length - 1] && words.length > 1);
+        seq.push(w);
+      }
+      if (seq[seq.length - 1] === words[next]) seq.push(words[(next + 1) % words.length]);
       seq.push(words[next]);
 
+      /* Cancel the old animation and swap the words in the same moment, so nothing flashes */
+      if (anims[i]) anims[i].cancel();
       strip.replaceChildren.apply(strip, seq.map(makeWord));
-      strip.style.transition = "none";
-      strip.style.transform = "translateY(0)";
-      void strip.offsetHeight;
 
-      reelEls[i].classList.add("spinning");
-      strip.style.transition = "transform " + duration + "ms cubic-bezier(0.16, 0.84, 0.3, 1)";
-      strip.style.transform = "translateY(-" + ((seq.length - 1) * WORD_HEIGHT) + "em)";
+      const distance = (seq.length - 1) * WORD_HEIGHT;
+      const anim = strip.animate(
+        [
+          { transform: "translate3d(0, 0, 0)" },
+          { transform: "translate3d(0, -" + distance + "em, 0)" }
+        ],
+        { duration: duration, delay: delay, easing: "cubic-bezier(0.5, 0.05, 0.12, 1)", fill: "both" }
+      );
+      anims[i] = anim;
       current[i] = next;
-
-      return new Promise(function (resolve) {
-        let finished = false;
-        function done() {
-          if (finished) return;
-          finished = true;
-          strip.removeEventListener("transitionend", done);
-          reelEls[i].classList.remove("spinning");
-          showWord(strip, words[next]);
-          resolve();
-        }
-        strip.addEventListener("transitionend", done);
-        setTimeout(done, duration + 250);
-      });
+      return anim.finished.then(function () {}, function () {});
     }
 
     function spinAll() {
@@ -273,15 +306,17 @@
         REELS.forEach(function (words, i) {
           const next = pickNext(i);
           current[i] = next;
-          showWord(reelEls[i].querySelector(".strip"), words[next]);
+          setWord(i, words[next]);
         });
         spinning = false;
         return Promise.resolve();
       }
 
-      return Promise.all([spinReel(0, 1400), spinReel(1, 1900), spinReel(2, 2400)]).then(function () {
-        spinning = false;
-      });
+      return Promise.all([
+        spinReel(0, 1900, 0),
+        spinReel(1, 2400, 150),
+        spinReel(2, 2900, 300)
+      ]).then(function () { spinning = false; });
     }
 
     function loop() {
@@ -293,9 +328,7 @@
       }, 4500);
     }
 
-    REELS.forEach(function (words, i) {
-      showWord(reelEls[i].querySelector(".strip"), words[0]);
-    });
+    REELS.forEach(function (words, i) { setWord(i, words[0]); });
 
     if (!reduceMotion.matches) {
       setTimeout(function () { spinAll().then(loop); }, 900);
