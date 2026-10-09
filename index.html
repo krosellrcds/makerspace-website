@@ -33,6 +33,12 @@
     li { padding: 0.5rem 0 0.5rem 1rem; border-left: 4px solid var(--tape); margin-bottom: 0.6rem; }
     a { color: var(--ink); text-decoration-thickness: 2px; text-underline-offset: 3px; }
     a:focus-visible { outline: 3px solid var(--tape); outline-offset: 3px; }
+    .cta {
+      display: inline-block; padding: 0.7rem 1.3rem;
+      background: var(--tape); color: #12343b;
+      font-weight: 600; text-decoration: none;
+    }
+    .cta:hover { text-decoration: underline; text-underline-offset: 4px; }
     footer { margin-top: 3rem; font-size: 0.9rem; color: var(--muted); }
   </style>
 </head>
@@ -49,6 +55,13 @@
   <section>
     <h2>What we do</h2>
     <p>Describe your programs here. For example: rapid prototyping challenges, beginner circuits, design projects, and open build time.</p>
+  </section>
+
+  <!-- EDIT ME: link to the student work page. Keep href="projects.html" so it opens your gallery. -->
+  <section>
+    <h2>Student work</h2>
+    <p>See the kinds of projects and classes our makerspace supports.</p>
+    <p><a class="cta" href="projects.html">Explore student work</a></p>
   </section>
 
   <!-- EDIT ME: equipment list. Copy a whole <li> line to add more, delete a line to remove one. -->
