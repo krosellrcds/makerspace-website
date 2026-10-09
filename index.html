@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- EDIT ME: the text that shows in the browser tab -->
+  <title>Your Makerspace Name</title>
+  <style>
+    :root {
+      --ink: #12343b;
+      --paper: #f4f7f8;
+      --tape: #ffc83d;
+      --muted: #4d6469;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root { --ink: #e8f1f2; --paper: #0e1f23; --muted: #9db4b8; }
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Trebuchet MS", "Segoe UI", system-ui, sans-serif;
+      background: var(--paper);
+      color: var(--ink);
+      line-height: 1.6;
+    }
+    main { max-width: 720px; margin: 0 auto; padding: 0 1.25rem 4rem; }
+    header { padding: 4rem 0 2.5rem; border-bottom: 6px solid var(--tape); }
+    h1 { font-size: clamp(2.2rem, 7vw, 3.6rem); line-height: 1.1; margin: 0 0 1rem; }
+    h2 { font-size: 1.5rem; margin: 3rem 0 0.75rem; }
+    p { max-width: 62ch; color: var(--muted); }
+    header p { font-size: 1.15rem; color: var(--ink); }
+    ul { padding: 0; list-style: none; }
+    li { padding: 0.5rem 0 0.5rem 1rem; border-left: 4px solid var(--tape); margin-bottom: 0.6rem; }
+    a { color: var(--ink); text-decoration-thickness: 2px; text-underline-offset: 3px; }
+    a:focus-visible { outline: 3px solid var(--tape); outline-offset: 3px; }
+    footer { margin-top: 3rem; font-size: 0.9rem; color: var(--muted); }
+  </style>
+</head>
+<body>
+<main>
+
+  <!-- EDIT ME: top of the page -->
+  <header>
+    <h1>Your Makerspace Name</h1>
+    <p>One or two sentences about what students make here and who it is for.</p>
+  </header>
+
+  <!-- EDIT ME: what you do -->
+  <section>
+    <h2>What we do</h2>
+    <p>Describe your programs here. For example: rapid prototyping challenges, beginner circuits, design projects, and open build time.</p>
+  </section>
+
+  <!-- EDIT ME: equipment list. Copy a whole <li> line to add more, delete a line to remove one. -->
+  <section>
+    <h2>What we have</h2>
+    <ul>
+      <li>3D printers</li>
+      <li>Laser cutters</li>
+      <li>Sewing machines</li>
+      <li>Electronics and circuit kits</li>
+      <li>Craft supplies</li>
+    </ul>
+  </section>
+
+  <!-- EDIT ME: contact info. Use a general makerspace email, not a personal one. -->
+  <section>
+    <h2>Get in touch</h2>
+    <p>Questions or ideas? Email us at <a href="mailto:makerspace@example.com">makerspace@example.com</a>.</p>
+  </section>
+
+  <footer>
+    <!-- EDIT ME: footer -->
+    <p>Your School Name</p>
+  </footer>
+
+</main>
+</body>
+</html>
