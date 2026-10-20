@@ -122,16 +122,49 @@
     .outcomes-featured h4 { margin-bottom: 0.35rem; color: var(--navy); font-size: 1rem; }
     .outcomes-featured p { margin: 0; font-size: 0.95rem; line-height: 1.4; }
 
-    /* The apprentice path: three steps that climb */
-    .stairs { display: grid; grid-template-columns: 1fr; gap: 1rem; margin-top: 1.5rem; }
-    @media (min-width: 800px) { .stairs { grid-template-columns: repeat(3, 1fr); align-items: end; } }
-    .step { padding: 1.25rem; }
-    @media (min-width: 800px) { .step-1 { min-height: 14rem; } .step-2 { min-height: 17.5rem; } .step-3 { min-height: 21rem; } }
-    .step-1 { background: var(--sky); color: var(--ink); }
-    .step-2 { background: var(--yellow); color: var(--ink); }
-    .step-3 { background: var(--navy); color: var(--paper); }
-    .step p { margin: 0 0 0.75rem; }
-    .step .advance { font-size: 0.95rem; font-weight: 600; }
+    /* Interactive level selector */
+    .level-path {
+      margin-top: 1.5rem; padding: clamp(0.65rem, 2vw, 1.25rem);
+      border: 3px solid var(--ink); border-radius: 0.35rem;
+      background-color: var(--sky);
+      box-shadow: 0.5rem 0.55rem 0 var(--navy);
+    }
+    .level-flow {
+      display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem;
+      align-items: stretch;
+    }
+    .level-card {
+      min-width: 0; min-height: 25rem; padding: clamp(1.25rem, 2.5vw, 2rem);
+      border: 2px solid var(--ink); color: var(--ink); background-color: var(--paper);
+      background-image: linear-gradient(rgba(1, 186, 239, 0.12) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(1, 186, 239, 0.12) 1px, transparent 1px);
+      background-size: 1.5rem 1.5rem;
+    }
+    .level-card h4 { margin: 0; font-size: clamp(1.5rem, 2.5vw, 2.2rem); }
+    .level-card .page-subtitle { min-height: 3.2em; margin: 0.35rem 0 1.4rem; font-size: 1rem; font-weight: 600; }
+    .level-details { display: grid; gap: 1rem; }
+    .level-details h5 { margin: 0 0 0.2rem; color: var(--navy); font-size: 0.95rem; }
+    .level-details p { margin: 0; }
+    .level-controls { display: none; }
+    @media (max-width: 799px) {
+      .level-path { padding: 0.65rem; }
+      .level-flow {
+        display: grid; grid-template-columns: none; grid-auto-columns: min(86%, 24rem);
+        grid-auto-flow: column; gap: 0.85rem; overflow-x: auto; padding: 0.15rem 0 0.75rem;
+        scroll-snap-type: x mandatory; overscroll-behavior-x: contain;
+        scrollbar-color: var(--navy) transparent; scrollbar-width: thin;
+      }
+      .level-card { min-height: 0; scroll-snap-align: center; }
+      .level-card .page-subtitle { min-height: 0; }
+      .level-controls { display: flex; align-items: center; justify-content: space-between; gap: 0.75rem; padding-top: 0.75rem; }
+      .level-controls[hidden] { display: none; }
+      .level-control-button { padding: 0.45rem 0.7rem; border: 2px solid var(--ink); background: var(--paper); color: var(--ink); font: inherit; font-weight: 700; cursor: pointer; }
+      .level-control-button:disabled { opacity: 0.45; cursor: not-allowed; }
+      .level-position { margin: 0; font-size: 0.9rem; font-weight: 700; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .level-flow { scroll-behavior: auto; }
+    }
     .section-intro { margin: 0.75rem 0 0; max-width: 40rem; }
 
     /* Key projects */
@@ -261,20 +294,67 @@
       <div class="wrap block reveal">
         <h3>The apprentice path</h3>
         <p class="section-intro">Apprentices grow through three levels, taking on more independence and more responsibility for the community as they go.</p>
-        <div class="stairs">
-          <div class="step step-1">
-            <h4>Level 1</h4>
-            <p>An introduction to tools, machines, and rapid prototyping skills, while collaborating with the Makerspace director on assigned design projects.</p>
-            <p class="advance">Advance after one badge and one workshop.</p>
+        <div class="level-path">
+          <div class="level-flow" role="region" aria-label="Apprentice levels" aria-roledescription="carousel" tabindex="0">
+          <article class="level-card" role="group" aria-roledescription="slide" aria-label="Level 1 of 3" aria-labelledby="apprentice-page-title-1" tabindex="0">
+            <h4 id="apprentice-page-title-1">Level 1: Foundations</h4>
+            <p class="page-subtitle">Build confidence with tools, materials, and rapid prototyping.</p>
+            <div class="level-details">
+              <section>
+                <h5>Requirements for advancement</h5>
+                <p>Earn one machine badge and lead one workshop.</p>
+              </section>
+              <section>
+                <h5>Skills and projects</h5>
+                <p>Get an introduction to tools, machines, and rapid prototyping while collaborating with the Makerspace director on assigned design projects. Add more examples of skills and projects here.</p>
+              </section>
+              <section>
+                <h5>Technical skills at the end of this level</h5>
+                <p>By the end of Level 1, apprentices can [describe the technical skills they can demonstrate independently].</p>
+              </section>
+            </div>
+          </article>
+          <article class="level-card" role="group" aria-roledescription="slide" aria-label="Level 2 of 3" aria-labelledby="apprentice-page-title-2" tabindex="0">
+            <h4 id="apprentice-page-title-2">Level 2: Independent Maker</h4>
+            <p class="page-subtitle">Turn growing technical skills into expressive, self-directed work.</p>
+            <div class="level-details">
+              <section>
+                <h5>Requirements for advancement</h5>
+                <p>Earn four machine badges and lead four or more workshops.</p>
+              </section>
+              <section>
+                <h5>Skills and projects</h5>
+                <p>Design and build passion projects that balance advanced technical skills with creativity, form, and self-expression. Build systems for knowledge transfer and documentation. Add more examples of skills and projects here.</p>
+              </section>
+              <section>
+                <h5>Technical skills at the end of this level</h5>
+                <p>By the end of Level 2, apprentices can [describe the tools, techniques, and processes they can use with confidence].</p>
+              </section>
+            </div>
+          </article>
+          <article class="level-card" role="group" aria-roledescription="slide" aria-label="Level 3 of 3" aria-labelledby="apprentice-page-title-3" tabindex="0">
+            <h4 id="apprentice-page-title-3">Level 3: Masterclass</h4>
+            <p class="page-subtitle">Use advanced skills to mentor others and take on community challenges.</p>
+            <div class="level-details">
+              <section>
+                <h5>Requirements for advancement</h5>
+                <p>This is the final level. Add any completion or mastery expectations here.</p>
+              </section>
+              <section>
+                <h5>Skills and projects</h5>
+                <p>Mentor new apprentices, lead an introductory training on a chosen machine, and independently design and run human-centered challenges that serve the community. Add more examples of skills and projects here.</p>
+              </section>
+              <section>
+                <h5>Technical skills at the end of this level</h5>
+                <p>By the end of Level 3, apprentices can [describe the advanced skills they can teach and apply independently].</p>
+              </section>
+            </div>
+          </article>
           </div>
-          <div class="step step-2">
-            <h4>Level 2</h4>
-            <p>Design and build passion projects that balance advanced technical skills with creativity, form, and self-expression, and build systems for knowledge transfer and documentation.</p>
-            <p class="advance">Advance after four badges and four or more workshops.</p>
-          </div>
-          <div class="step step-3">
-            <h4>Level 3: Masterclass</h4>
-            <p>Mentor new apprentices, lead intro trainings on a chosen machine, and independently design and run human-centered challenges that serve the community. Level 3 apprentices are badged on most or all Makerspace systems.</p>
+          <div class="level-controls" hidden>
+            <button class="level-control-button" type="button" data-level-step="-1" aria-label="Show previous level">Previous</button>
+            <p class="level-position" aria-live="polite">Level 1 of 3</p>
+            <button class="level-control-button" type="button" data-level-step="1" aria-label="Show next level">Next</button>
           </div>
         </div>
       </div>
@@ -433,6 +513,72 @@
   </footer>
 
   <script>
+    /* Keep level controls in sync with the swipeable cards. */
+    (function () {
+      const carousel = document.querySelector(".level-flow");
+      const controls = document.querySelector(".level-controls");
+      if (!carousel || !controls) return;
+
+      const cards = Array.from(carousel.querySelectorAll(".level-card"));
+      const buttons = Array.from(controls.querySelectorAll("[data-level-step]"));
+      const position = controls.querySelector(".level-position");
+      let activeIndex = 0;
+      let scrollTimer;
+
+      function updateControls() {
+        position.textContent = "Level " + (activeIndex + 1) + " of " + cards.length;
+        buttons[0].disabled = activeIndex === 0;
+        buttons[1].disabled = activeIndex === cards.length - 1;
+      }
+
+      function updateActiveCard() {
+        const carouselCenter = carousel.scrollLeft + carousel.clientWidth / 2;
+        activeIndex = cards.reduce(function (closestIndex, card, index) {
+          const cardCenter = card.offsetLeft + card.offsetWidth / 2;
+          const closestCenter = cards[closestIndex].offsetLeft + cards[closestIndex].offsetWidth / 2;
+          return Math.abs(cardCenter - carouselCenter) < Math.abs(closestCenter - carouselCenter) ? index : closestIndex;
+        }, 0);
+        updateControls();
+      }
+
+      buttons.forEach(function (button) {
+        button.addEventListener("click", function () {
+          const nextIndex = activeIndex + Number(button.dataset.levelStep);
+          if (nextIndex < 0 || nextIndex >= cards.length) return;
+          activeIndex = nextIndex;
+          updateControls();
+          cards[nextIndex].scrollIntoView({
+            behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth",
+            block: "nearest",
+            inline: "center"
+          });
+        });
+      });
+
+      carousel.addEventListener("keydown", function (event) {
+        if (event.key !== "ArrowLeft" && event.key !== "ArrowRight") return;
+        const direction = event.key === "ArrowRight" ? 1 : -1;
+        const nextIndex = activeIndex + direction;
+        if (nextIndex < 0 || nextIndex >= cards.length) return;
+        event.preventDefault();
+        activeIndex = nextIndex;
+        updateControls();
+        cards[nextIndex].scrollIntoView({
+          behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth",
+          block: "nearest",
+          inline: "center"
+        });
+      });
+
+      carousel.addEventListener("scroll", function () {
+        window.clearTimeout(scrollTimer);
+        scrollTimer = window.setTimeout(updateActiveCard, 80);
+      }, { passive: true });
+
+      updateControls();
+      controls.hidden = false;
+    })();
+
     /* Fade each section in as it scrolls into view */
     (function () {
       const els = document.querySelectorAll(".reveal");
