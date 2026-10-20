@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- EDIT ME: the text that shows in the browser tab -->
+  <title>STEAM Classes | RCDS Makerspace</title>
+  <!-- Tab icon (the paw print). Upload favicon.ico, favicon.png, and apple-touch-icon.png next to this file. -->
+  <link rel="icon" href="favicon.ico" sizes="32x32">
+  <link rel="icon" href="favicon.png" type="image/png">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <script>document.documentElement.classList.add("js");</script>
+  <style>
+    :root {
+      /* Brand colors */
+      --yellow: #ffde3a;
+      --navy: #042e53;
+      --sky: #01baef;
+      --paper: #fbfbff;
+      --ink: #040f16;
+    }
+    * { box-sizing: border-box; }
+    @media (prefers-reduced-motion: no-preference) { html { scroll-behavior: smooth; } }
+    body {
+      margin: 0;
+      font-family: "Inter Tight", "Helvetica Neue", Arial, sans-serif;
+      background: var(--paper);
+      color: var(--ink);
+      line-height: 1.55;
+    }
+    a { color: inherit; }
+    :focus-visible { outline: 3px solid var(--navy); outline-offset: 3px; }
+
+    /* Top bar: logo left, quiet links, an outlined button, then the main filled button */
+    .top {
+      display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center;
+      gap: 1rem 2rem;
+      padding: 1.25rem clamp(1rem, 4vw, 3rem);
+    }
+    .brand {
+      display: inline-flex; align-items: center; gap: 0.6rem;
+      font-size: 1.3rem; font-weight: 800; letter-spacing: -0.02em;
+      color: var(--ink); text-decoration: none;
+    }
+    .brand img { display: block; width: 2rem; height: 2rem; }
+    .brand-b { background: var(--yellow); padding: 0 0.3em; margin-left: -0.15em; }
+    .top nav { display: flex; flex-wrap: wrap; align-items: center; gap: 0.75rem 1.5rem; }
+    .link { color: var(--ink); text-decoration: none; }
+    .link:hover, .link[aria-current="page"] { text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 5px; }
+    .link[aria-current="page"] { font-weight: 600; }
+    .btn {
+      display: inline-block; padding: 0.7rem 1.25rem; line-height: 1.2;
+      font-weight: 600; text-decoration: none; border: 2px solid var(--ink);
+    }
+    .btn-outline { color: var(--ink); background: rgba(251, 251, 255, 0.6); }
+    .btn-outline:hover { background: var(--yellow); }
+    .btn-fill { color: var(--paper); background: var(--navy); border-color: var(--navy); }
+    .btn-fill:hover { background: var(--ink); border-color: var(--ink); }
+
+    /* Page intro */
+    .page-hero { padding: clamp(2.5rem, 8vw, 6rem) clamp(1rem, 4vw, 3rem) clamp(2.5rem, 6vw, 4.5rem); }
+    .page-hero h1 {
+      margin: 0; font-size: clamp(3rem, 12vw, 9rem);
+      line-height: 0.95; letter-spacing: -0.045em; font-weight: 800;
+    }
+    .page-hero p { max-width: 46ch; margin: 1.75rem 0 0; font-size: clamp(1.05rem, 2vw, 1.3rem); }
+    .chapters-nav { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 2rem; }
+    .chapter-link {
+      display: inline-flex; align-items: baseline; gap: 0.75rem;
+      padding: 0.8rem 1.25rem; border: 2px solid var(--ink);
+      font-weight: 600; text-decoration: none;
+    }
+    .chapter-link span { font-weight: 800; color: var(--navy); }
+    .chapter-link:hover { background: var(--yellow); }
+
+    /* Chapter cover: a big colored band with the class name and a graphic */
+    .chapter { scroll-margin-top: 0; }
+    .cover {
+      display: grid; grid-template-columns: 1fr; gap: 2rem; align-items: center;
+      padding: clamp(2.5rem, 7vw, 5rem) clamp(1rem, 4vw, 3rem);
+    }
+    @media (min-width: 800px) { .cover { grid-template-columns: 1.3fr 1fr; } }
+    .cover-a { background: var(--navy); color: var(--paper); }
+    .cover-b { background: var(--yellow); color: var(--ink); }
+    .chapter-label { display: flex; flex-wrap: wrap; align-items: center; gap: 0.75rem 1rem; margin: 0 0 1.25rem; font-weight: 600; }
+    .chapter-num { padding: 0.2rem 0.7rem; border: 2px solid currentColor; font-weight: 800; }
+    .cover h2 {
+      margin: 0; font-size: clamp(2.6rem, 7.5vw, 6.5rem);
+      line-height: 0.95; letter-spacing: -0.045em; font-weight: 800;
+    }
+    .cover .tag { max-width: 34rem; margin: 1.5rem 0 0; font-size: clamp(1.05rem, 1.8vw, 1.3rem); }
+    .cover-art svg { display: block; width: min(100%, 26rem); height: auto; margin-inline: auto; }
+
+    /* Shared content blocks */
+    .wrap { padding-left: clamp(1rem, 4vw, 3rem); padding-right: clamp(1rem, 4vw, 3rem); }
+    .block { padding-top: clamp(2.25rem, 5vw, 4rem); }
+    .block:last-child { padding-bottom: clamp(3rem, 7vw, 5.5rem); }
+    h3 { margin: 0; font-size: clamp(1.6rem, 3vw, 2.4rem); line-height: 1.1; letter-spacing: -0.03em; font-weight: 800; }
+    h4 { margin: 0 0 0.5rem; font-size: clamp(1.15rem, 1.8vw, 1.4rem); line-height: 1.2; letter-spacing: -0.02em; font-weight: 800; }
+
+    /* The numbers: credits, credit type, and more */
+    .facts { display: grid; grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr)); gap: 1.75rem 1.5rem; margin: 0; }
+    .fact { border-top: 2px solid var(--ink); padding-top: 0.9rem; }
+    .fact dt { font-size: 0.95rem; font-weight: 600; color: var(--navy); }
+    .fact dd { margin: 0.35rem 0 0; font-size: clamp(1.4rem, 2.4vw, 2rem); font-weight: 800; line-height: 1.1; letter-spacing: -0.03em; }
+    .fact-num dd { font-size: clamp(3.2rem, 6vw, 5rem); line-height: 0.9; }
+
+    /* Description */
+    .split { display: grid; grid-template-columns: 1fr; gap: 1.25rem 4rem; }
+    @media (min-width: 900px) { .split { grid-template-columns: 4fr 7fr; } }
+    .lead { margin: 0 0 1rem; font-size: clamp(1.2rem, 2vw, 1.6rem); line-height: 1.4; max-width: 40rem; }
+    .split p { max-width: 40rem; }
+    .outcomes { counter-reset: n; list-style: none; margin: 2rem 0 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr)); gap: 1.25rem 2rem; }
+    .outcomes li { counter-increment: n; border-top: 2px solid var(--ink); padding-top: 0.75rem; }
+    .outcomes li::before { content: counter(n, decimal-leading-zero); display: block; margin-bottom: 0.35rem; font-weight: 800; font-size: 1.5rem; color: var(--navy); letter-spacing: -0.02em; }
+
+    /* The apprentice path: three steps that climb */
+    .stairs { display: grid; grid-template-columns: 1fr; gap: 1rem; margin-top: 1.5rem; }
+    @media (min-width: 800px) { .stairs { grid-template-columns: repeat(3, 1fr); align-items: end; } }
+    .step { padding: 1.25rem; }
+    @media (min-width: 800px) { .step-1 { min-height: 14rem; } .step-2 { min-height: 17.5rem; } .step-3 { min-height: 21rem; } }
+    .step-1 { background: var(--sky); color: var(--ink); }
+    .step-2 { background: var(--yellow); color: var(--ink); }
+    .step-3 { background: var(--navy); color: var(--paper); }
+    .step p { margin: 0 0 0.75rem; }
+    .step .advance { font-size: 0.95rem; font-weight: 600; }
+    .section-intro { margin: 0.75rem 0 0; max-width: 40rem; }
+
+    /* Key projects */
+    .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr)); gap: 1rem; margin-top: 1.5rem; }
+    .card { border: 2px solid var(--ink); border-top-width: 10px; padding: 1.25rem; }
+    .card p { margin: 0; }
+    .card.c0 { border-top-color: var(--yellow); }
+    .card.c1 { border-top-color: var(--sky); }
+    .card.c2 { border-top-color: var(--navy); }
+    .card.c3 { border-top-color: var(--ink); }
+
+    /* How it works */
+    .three { display: grid; grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr)); gap: 1rem; margin-top: 1.5rem; }
+    .how { background: var(--navy); color: var(--paper); padding: 1.25rem; }
+    .how h4 { color: var(--yellow); }
+    .how p { margin: 0; }
+    .note { margin: 1.25rem 0 0; max-width: 46rem; }
+
+    footer { padding: 2.5rem clamp(1rem, 4vw, 3rem) 3rem; display: flex; flex-wrap: wrap; gap: 1rem 2rem; justify-content: space-between; border-top: 2px solid var(--ink); }
+    footer p { margin: 0; }
+
+    /* Gentle fade-in as each section scrolls into view */
+    html.js .reveal { opacity: 0; transform: translateY(18px); }
+    html.js .reveal.in { opacity: 1; transform: none; }
+    @media (prefers-reduced-motion: no-preference) {
+      html.js .reveal.in { transition: opacity 0.6s ease, transform 0.6s ease; }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="top">
+    <!-- EDIT ME: the name in the top left. The paw print is favicon.png -->
+    <a class="brand" href="index.html"><img src="favicon.png" alt="">RCDS <span class="brand-b">Makerspace</span></a>
+    <!-- EDIT ME: menu links. Replace each # with the page address once that page exists, like about.html -->
+    <nav aria-label="Main">
+      <a class="link" href="#">About Us</a>
+      <a class="link" href="classes.html" aria-current="page">STEAM Classes</a>
+      <a class="link" href="#">Contact Us</a>
+      <a class="btn btn-outline" href="projects.html">Student Work</a>
+      <a class="btn btn-fill" href="#">Book the Space</a>
+    </nav>
+  </header>
+
+  <main>
+
+    <header class="page-hero">
+      <h1>STEAM Classes</h1>
+      <!-- EDIT ME: a sentence or two introducing both classes -->
+      <p>Two ways to learn and lead in the Makerspace: a hands-on apprenticeship for Upper School students, and a design and engineering course for middle schoolers.</p>
+      <nav class="chapters-nav" aria-label="Classes on this page">
+        <a class="chapter-link" href="#apprenticeship"><span>01</span> STEAM Apprenticeship</a>
+        <a class="chapter-link" href="#design-engineering"><span>02</span> Makerspace: Design &amp; Engineering</a>
+      </nav>
+    </header>
+
+
+    <!-- =====================================================================
+         CLASS 1: STEAM APPRENTICESHIP
+         ===================================================================== -->
+    <section class="chapter" id="apprenticeship" aria-labelledby="apprenticeship-title">
+
+      <div class="cover cover-a">
+        <div>
+          <p class="chapter-label"><span class="chapter-num">01</span> Upper School</p>
+          <!-- EDIT ME: class name -->
+          <h2 id="apprenticeship-title">STEAM Apprenticeship</h2>
+          <!-- EDIT ME: one-line summary under the class name -->
+          <p class="tag">Hands-on practice with advanced tools, design thinking, and Makerspace leadership.</p>
+        </div>
+        <div class="cover-art" aria-hidden="true">
+          <svg viewBox="0 0 360 300">
+            <rect x="20" y="200" width="90" height="80" fill="#01baef"/>
+            <rect x="130" y="140" width="90" height="140" fill="#fbfbff"/>
+            <rect x="240" y="90" width="90" height="190" fill="#ffde3a"/>
+            <polyline points="65,185 175,125 285,75" fill="none" stroke="#fbfbff" stroke-width="3" stroke-dasharray="8 8"/>
+            <circle cx="285" cy="42" r="26" fill="none" stroke="#ffde3a" stroke-width="6"/>
+            <circle cx="285" cy="42" r="8" fill="#ffde3a"/>
+          </svg>
+        </div>
+      </div>
+
+      <!-- Facts: class level, credits, credit type, term, and schedule -->
+      <div class="wrap block reveal">
+        <dl class="facts">
+          <div class="fact"><dt>Class level</dt><dd>Upper School</dd></div>
+          <div class="fact fact-num"><dt>Credits</dt><dd>&frac12;</dd></div>
+          <div class="fact"><dt>Credit type</dt><dd>STEAM</dd></div>
+          <div class="fact"><dt>Term</dt><dd>Semester, graded elective</dd></div>
+          <div class="fact fact-num"><dt>Meets</dt><dd>3&times;</dd></div>
+        </dl>
+        <p class="note">Meets 3 blocks per 6-day cycle.</p>
+      </div>
+
+      <!-- What students do -->
+      <div class="wrap block reveal">
+        <div class="split">
+          <h3>What students do</h3>
+          <div>
+            <!-- EDIT ME: description of the class -->
+            <p class="lead">The STEAM Apprenticeship gives motivated Upper School students hands-on practice with advanced tools, design thinking, and Makerspace leadership.</p>
+            <p>Apprentices split their time between direct instruction, guided project work, and service that supports the day-to-day operation of the Makerspace.</p>
+          </div>
+        </div>
+        <!-- EDIT ME: key outcomes. Copy a whole <li> line to add one, delete a line to remove one. -->
+        <ol class="outcomes">
+          <li>Operate Makerspace tools and machines safely and confidently</li>
+          <li>Apply design thinking to define, prototype, test, and refine ideas</li>
+          <li>Lead peers through short, structured workshops</li>
+          <li>Document work clearly in an Engineering Journal with technical drawings, photos, and reflections</li>
+        </ol>
+      </div>
+
+      <!-- The apprentice path -->
+      <div class="wrap block reveal">
+        <h3>The apprentice path</h3>
+        <p class="section-intro">Apprentices grow through three levels, taking on more independence and more responsibility for the community as they go.</p>
+        <div class="stairs">
+          <div class="step step-1">
+            <h4>Level 1</h4>
+            <p>An introduction to tools, machines, and rapid prototyping skills, while collaborating with the Makerspace director on assigned design projects.</p>
+            <p class="advance">Advance after one badge and one workshop.</p>
+          </div>
+          <div class="step step-2">
+            <h4>Level 2</h4>
+            <p>Design and build passion projects that balance advanced technical skills with creativity, form, and self-expression, and build systems for knowledge transfer and documentation.</p>
+            <p class="advance">Advance after four badges and four or more workshops.</p>
+          </div>
+          <div class="step step-3">
+            <h4>Level 3: Masterclass</h4>
+            <p>Mentor new apprentices, lead intro trainings on a chosen machine, and independently design and run human-centered challenges that serve the community. Level 3 apprentices are badged on most or all Makerspace systems.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Key projects -->
+      <div class="wrap block reveal">
+        <h3>Key projects</h3>
+        <!-- EDIT ME: key projects. Copy a whole <div class="card"> block to add one. Keep c0, c1, c2, or c3 to change the top color. -->
+        <div class="cards">
+          <div class="card c0">
+            <h4>Machine badges</h4>
+            <p>Each major tool or machine has a three-tier badge path. Apprentices earn a badge by completing the assigned project and leading a workshop.</p>
+          </div>
+          <div class="card c1">
+            <h4>Student-led workshops</h4>
+            <p>Every apprentice leads a 30-minute workshop on a skill or machine, from an intro to laser cutting or 3D printing to a design thinking crash course.</p>
+          </div>
+          <div class="card c2">
+            <h4>Passion projects</h4>
+            <p>Level 2 apprentices design and build projects that balance advanced technical skills with creativity, form, and self-expression.</p>
+          </div>
+          <div class="card c3">
+            <h4>Community design challenges</h4>
+            <p>Level 3 apprentices independently design and carry out human-centered challenges that serve the community and beyond.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- How it works -->
+      <div class="wrap block reveal">
+        <h3>How it works</h3>
+        <div class="three">
+          <div class="how">
+            <h4>Safety first</h4>
+            <p>Apprentices pass the Makerspace safety quiz and sign a safety contract before beginning any work.</p>
+          </div>
+          <div class="how">
+            <h4>Document everything</h4>
+            <p>Apprentices keep an Engineering Journal, updated at least once per cycle, with technical drawings, photos, and reflections.</p>
+          </div>
+          <div class="how">
+            <h4>Give back</h4>
+            <p>Each apprentice has a service block that supports the day-to-day running of the Makerspace.</p>
+          </div>
+        </div>
+        <p class="note">Grades reflect three things: skills shown through projects and workshops, documentation of the work, and professionalism, including attendance, engagement, and service to the community.</p>
+      </div>
+
+    </section>
+
+
+    <!-- =====================================================================
+         CLASS 2: MAKERSPACE: DESIGN & ENGINEERING
+         ===================================================================== -->
+    <section class="chapter" id="design-engineering" aria-labelledby="de-title">
+
+      <div class="cover cover-b">
+        <div>
+          <p class="chapter-label"><span class="chapter-num">02</span> Middle School, Grades 7 and 8</p>
+          <!-- EDIT ME: class name -->
+          <h2 id="de-title">Makerspace: Design &amp; Engineering</h2>
+          <!-- EDIT ME: one-line summary under the class name -->
+          <p class="tag">The intersection of all things art and technology.</p>
+        </div>
+        <div class="cover-art" aria-hidden="true">
+          <svg viewBox="0 0 360 300">
+            <path d="M30 150 V70 A40 40 0 0 1 70 30 H150 V150 Z" fill="#042e53"/>
+            <circle cx="250" cy="90" r="60" fill="#01baef"/>
+            <polygon points="30,280 90,170 150,280" fill="none" stroke="#040f16" stroke-width="12"/>
+            <polygon points="250,280 310,220 250,160 190,220" fill="#040f16"/>
+          </svg>
+        </div>
+      </div>
+
+      <!-- Facts -->
+      <div class="wrap block reveal">
+        <dl class="facts">
+          <div class="fact"><dt>Class level</dt><dd>Grades 7 and 8</dd></div>
+          <!-- EDIT ME: credits. This is a stand-in until the number is confirmed. -->
+          <div class="fact fact-num"><dt>Credits</dt><dd>&ndash;</dd></div>
+          <div class="fact"><dt>Credit type</dt><dd>Computer science elective</dd></div>
+          <div class="fact"><dt>Term</dt><dd>One trimester</dd></div>
+          <div class="fact fact-num"><dt>Meets</dt><dd>3&times;</dd></div>
+        </dl>
+        <p class="note">Meets three times per 6-day cycle.</p>
+      </div>
+
+      <!-- What students do -->
+      <div class="wrap block reveal">
+        <div class="split">
+          <h3>What students do</h3>
+          <div>
+            <!-- EDIT ME: description of the class -->
+            <p class="lead">Makerspace: Design &amp; Engineering is the intersection of all things art and technology. Students learn the tools and skills of the Makerspace and use them to create projects that blend art and technology.</p>
+            <p>Through observation, tinkering, trial and error, testing, and iterative design, students develop sketches and models, design in 2D and 3D, fabricate artifacts to test their designs, and learn code, logic, and computational thinking.</p>
+          </div>
+        </div>
+        <!-- EDIT ME: what students learn. Copy a whole <li> line to add one, delete a line to remove one. -->
+        <ol class="outcomes">
+          <li>Learn the tools and skills of the Makerspace</li>
+          <li>Create projects that blend art and technology</li>
+          <li>Use computational and design thinking to prototype solutions</li>
+          <li>Use empathy to create meaningful designs</li>
+          <li>Explore a variety of media and materials</li>
+          <li>Design with purpose and practice creativity</li>
+        </ol>
+      </div>
+
+      <!-- Key projects -->
+      <div class="wrap block reveal">
+        <h3>Key projects</h3>
+        <!-- EDIT ME: key projects. Copy a whole <div class="card"> block to add one. Keep c0, c1, c2, or c3 to change the top color. -->
+        <div class="cards">
+          <div class="card c0">
+            <h4>Final project</h4>
+            <p>Students choose their own project and bring together multiple skills they have learned to create something spectacular. Sharing and explaining their ideas is part of the process.</p>
+          </div>
+          <div class="card c1">
+            <h4>Electric vehicle design challenge</h4>
+            <p>Teams design, build, and test an electric vehicle against a set of design requirements.</p>
+          </div>
+          <div class="card c2">
+            <h4>Add a project name</h4>
+            <p>Add one or two sentences about this project and what students make or learn.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- How it works -->
+      <div class="wrap block reveal">
+        <h3>How it works</h3>
+        <div class="three">
+          <div class="how">
+            <h4>Learning through doing</h4>
+            <p>Teacher modeling introduces each skill and tool, and students then explore methods and materials on their own.</p>
+          </div>
+          <div class="how">
+            <h4>Engineering Journal</h4>
+            <p>Students document every step of their process in a digital journal, which is reviewed once per cycle.</p>
+          </div>
+          <div class="how">
+            <h4>Pass/Fail with feedback</h4>
+            <p>There is no homework. Rubrics and regular feedback encourage students to improve and iterate on their work.</p>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+  </main>
+
+  <footer>
+    <!-- EDIT ME: footer text -->
+    <p>Rye Country Day School</p>
+    <p><a href="index.html">Back to home</a></p>
+  </footer>
+
+  <script>
+    /* Fade each section in as it scrolls into view */
+    (function () {
+      const els = document.querySelectorAll(".reveal");
+      if (!("IntersectionObserver" in window) || window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        els.forEach(function (e) { e.classList.add("in"); });
+        return;
+      }
+      const io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (en) {
+          if (en.isIntersecting) { en.target.classList.add("in"); io.unobserve(en.target); }
+        });
+      }, { rootMargin: "0px 0px -8% 0px", threshold: 0.05 });
+      els.forEach(function (e) { io.observe(e); });
+    })();
+  </script>
+</body>
+</html>
