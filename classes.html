@@ -116,6 +116,11 @@
     .outcomes { counter-reset: n; list-style: none; margin: 2rem 0 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr)); gap: 1.25rem 2rem; }
     .outcomes li { counter-increment: n; border-top: 2px solid var(--ink); padding-top: 0.75rem; }
     .outcomes li::before { content: counter(n, decimal-leading-zero); display: block; margin-bottom: 0.35rem; font-weight: 800; font-size: 1.5rem; color: var(--navy); letter-spacing: -0.02em; }
+    .outcomes-featured { grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr)); gap: 1.25rem 1.5rem; }
+    .outcomes-featured li { counter-increment: none; }
+    .outcomes-featured li::before { content: none; }
+    .outcomes-featured h4 { margin-bottom: 0.35rem; color: var(--navy); font-size: 1rem; }
+    .outcomes-featured p { margin: 0; font-size: 0.95rem; line-height: 1.4; }
 
     /* The apprentice path: three steps that climb */
     .stairs { display: grid; grid-template-columns: 1fr; gap: 1rem; margin-top: 1.5rem; }
@@ -231,12 +236,24 @@
             <p>Apprentices split their time between direct instruction, guided project work, and service that supports the day-to-day operation of the Makerspace.</p>
           </div>
         </div>
-        <!-- EDIT ME: key outcomes. Copy a whole <li> line to add one, delete a line to remove one. -->
-        <ol class="outcomes">
-          <li>Operate Makerspace tools and machines safely and confidently</li>
-          <li>Apply design thinking to define, prototype, test, and refine ideas</li>
-          <li>Lead peers through short, structured workshops</li>
-          <li>Document work clearly in an Engineering Journal with technical drawings, photos, and reflections</li>
+        <!-- EDIT ME: key outcomes. Copy a whole <li> block to add one, delete a block to remove one. -->
+        <ol class="outcomes outcomes-featured">
+          <li>
+            <h4>Makerspace Tools</h4>
+            <p>Operate tools and machines safely and confidently.</p>
+          </li>
+          <li>
+            <h4>Design Thinking Process</h4>
+            <p>Define, prototype, test, and refine ideas using design thinking.</p>
+          </li>
+          <li>
+            <h4>Student-led Workshops</h4>
+            <p>Lead peers through short, structured workshops.</p>
+          </li>
+          <li>
+            <h4>Engineering Journal</h4>
+            <p>Document work with technical drawings, photos, and reflections.</p>
+          </li>
         </ol>
       </div>
 
